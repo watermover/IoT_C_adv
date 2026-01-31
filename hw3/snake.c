@@ -55,7 +55,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <curses.h>
+#include <curses.h> // пришлось использовать вместо <ncurses/ncurses.h> из за macos
 #include <inttypes.h>
 #include <string.h>
 #include <unistd.h>
