@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 10005
+
+int main() {
+    static char s1[MAX_LEN], s2[MAX_LEN];
+    
+    if (!fgets(s1, sizeof(s1), stdin)) {
+        printf("0 0\n");
+        return 0;
+    }
+    if (!fgets(s2, sizeof(s2), stdin)) {
+        printf("0 0\n");
+        return 0;
+    }
+    
+    s1[strcspn(s1, "\n")] = 0;
+    s2[strcspn(s2, "\n")] = 0;
+    
+    int len1 = strlen(s1);
+    int len2 = strlen(s2);
+    
+    if (len1 == 0 || len2 == 0) {
+        printf("0 0\n");
+        return 0;
+    }
+    
+    int max_prefix_suffix = 0;
+    int max_len = len1 < len2 ? len1 : len2;
+    
+    for (int i = max_len; i >= 1; i--) {
+        int match = 1;
+        for (int j = 0; j < i; j++) {
+            if (s1[j] != s2[len2 - i + j]) {
+                match = 0;
+                break;
+            }
+        }
+        if (match) {
+            max_prefix_suffix = i;
+            break;
+        }
+    }
+    
+    int max_suffix_prefix = 0;
+    
+    for (int i = max_len; i >= 1; i--) {
+        int match = 1;
+        for (int j = 0; j < i; j++) {
+            if (s1[len1 - i + j] != s2[j]) {
+                match = 0;
+                break;
+            }
+        }
+        if (match) {
+            max_suffix_prefix = i;
+            break;
+        }
+    }
+    
+    printf("%d %d\n", max_prefix_suffix, max_suffix_prefix);
+    
+    return 0;
+}
